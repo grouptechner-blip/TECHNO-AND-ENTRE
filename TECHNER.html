@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TECH×FOUNDER — Field Notes · Technology & Entrepreneurship</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #050505;
+            --white: #ffffff;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --accent: #3b82f6;
+            --accent-light: #60a5fa;
+            --accent-dark: #1d4ed8;
+            --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: var(--gray-800);
+            background: linear-gradient(180deg, var(--white) 0%, var(--gray-50) 100%);
+            overflow-x: hidden;
+        }
+        h1, h2, h3, h4, .logo, .num-badge {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+        a { text-decoration: none; color: inherit; }
+        .container {
+            width: 92%;
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Header & Navigation */
+        header {
+            padding: 1.5rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+            transition: var(--transition);
+        }
+        header.scrolled {
+            padding: 1rem 0;
+            box-shadow: var(--shadow-md);
+        }
+        .nav-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .logo {
+            font-size: 1.75rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-gradient);
+            border-radius: 2px;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        .logo:hover::after { transform: scaleX(1); }
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--gray-600);
+            border-radius: var(--radius-sm);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gradient);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .nav-links a:hover {
+            color: var(--accent);
+            background: rgba(59, 130, 246, 0.08);
+        }
+        .nav-links a:hover::before { width: 70%; }
+
+        /* Hero Section */
+        .hero {
+            padding: 14rem 0 8rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before, .hero::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.12;
+            pointer-events: none;
+        }
+        .hero::before {
+            width: 600px;
+            height: 600px;
+            background: var(--accent);
+            top: -200px;
+            right: -100px;
+            animation: float 8s ease-in-out infinite;
+        }
+        .hero::after {
+            width: 500px;
+            height: 500px;
+            background: #8b5cf6;
+            bottom: -150px;
+            left: -100px;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -30px); }
+        }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.25rem;
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-dark);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            animation: fadeInUp 0.8s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .hero h1 {
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            line-height: 1.05;
+            margin-bottom: 2.5rem;
+            background: linear-gradient(135deg, var(--gray-900) 0%, var(--gray-700) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease 0.1s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 720px;
+            color: var(--gray-600);
+            line-height: 1.8;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .hero-steps {
+            display: inline-flex;
+            gap: 2.5rem;
+            margin-top: 3rem;
+            padding: 1.5rem 2.5rem;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-200);
+            animation: fadeInUp 0.8s ease 0.3s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+            flex-wrap: wrap;
+        }
+        .hero-steps span {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            position: relative;
+            cursor: default;
+            transition: var(--transition);
+        }
+        .hero-steps span:hover { color: var(--accent); transform: translateY(-3px); }
+        .hero-steps span:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -1.75rem;
+            color: var(--gray-300);
+            font-weight: 400;
+        }
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section Base */
+        section {
+            padding: 5rem 0;
+            position: relative;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.08);
+        }
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+        .num-badge {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            background: rgba(59, 130, 246, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
+            white-space: nowrap;
+        }
+        h2 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            color: var(--gray-900);
+            position: relative;
+        }
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--accent-gradient);
+            border-radius: 2px;
+        }
+        h3 {
+            font-size: 1.4rem;
+            margin: 2rem 0 1rem;
+            color: var(--gray-800);
+        }
+        p {
+            margin-bottom: 1.3rem;
+            font-size: 1.05rem;
+            color: var(--gray-700);
+        }
+        ul, ol {
+            margin: 1.5rem 0;
+            padding-left: 1.75rem;
+        }
+        li {
+            margin-bottom: 0.8rem;
+            font-size: 1.03rem;
+            color: var(--gray-700);
+            line-height: 1.7;
+        }
+        ol li::marker { color: var(--accent); font-weight: 700; }
+        strong { color: var(--gray-900); font-weight: 600; }
+
+        /* Fact Box */
+        .fact-box {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+            padding: 1.75rem;
+            border-radius: var(--radius-lg);
+            margin: 2rem 0;
+            border-left: 5px solid;
+            border-image: var(--accent-gradient) 1;
+            transition: var(--transition);
+        }
+        .fact-box:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        .fact-box strong {
+            display: block;
+            color: var(--accent-dark);
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        /* Numbers Section */
+        .numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+        .number-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--gray-200);
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .number-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent-gradient);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        .number-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: transparent;
+        }
+        .number-card:hover::before { transform: scaleX(1); }
+        .number-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.8rem;
+            line-height: 1;
+        }
+        .number-card p {
+            font-size: 0.95rem;
+            color: var(--gray-600);
+            margin-bottom: 0;
+            line-height: 1.5;
+        }
+
+        /* Funding Section */
+        .funding-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+        .funding-col {
+            padding: 2rem;
+            border-radius: var(--radius-xl);
+            background: var(--white);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--gray-200);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .funding-col::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--accent-gradient);
+        }
+        .funding-col:nth-child(2)::before {
+            background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+        }
+        .funding-col:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+        .funding-col h3 {
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+        @media (max-width: 868px) {
+            .funding-grid { grid-template-columns: 1fr; }
+            .nav-links { gap: 0.25rem; }
+            .nav-links a { padding: 0.4rem 0.7rem; font-size: 0.85rem; }
+        }
+        @media (max-width: 640px) {
+            .hero-steps { flex-direction: column; gap: 1rem; padding: 1.5rem; }
+            .hero-steps span::after { display: none; }
+        }
+
+        /* FAQ Accordion */
+        .faq-item {
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .faq-item:first-child { border-top: 1px solid var(--gray-200); }
+        .faq-q {
+            width: 100%;
+            text-align: left;
+            padding: 1.5rem 0;
+            font-size: 1.08rem;
+            font-weight: 600;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--gray-800);
+            transition: var(--transition);
+        }
+        .faq-q span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--gray-100);
+            color: var(--accent);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            margin-left: 1rem;
+        }
+        .faq-q.active span {
+            background: var(--accent);
+            color: white;
+            transform: rotate(45deg);
+        }
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .faq-a-inner {
+            padding-bottom: 1.5rem;
+            color: var(--gray-600);
+            font-size: 1.03rem;
+            line-height: 1.8;
+        }
+
+        /* Glossary */
+        #glossary-search {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            font-size: 1rem;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            margin-bottom: 2rem;
+            background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E") no-repeat 1rem center;
+            transition: var(--transition);
+        }
+        #glossary-search:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+        .glossary-item {
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 1rem;
+            background: var(--white);
+            border: 1px solid transparent;
+            transition: var(--transition);
+        }
+        .glossary-item:hover {
+            border-color: var(--accent-light);
+            box-shadow: var(--shadow-sm);
+        }
+        .glossary-term {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.4rem;
+            color: var(--accent-dark);
+        }
+        .glossary-desc {
+            color: var(--gray-600);
+            line-height: 1.7;
+        }
+
+        /* Footer / Team */
+        footer {
+            padding: 4rem 0 2.5rem;
+            background: linear-gradient(180deg, var(--gray-900) 0%, #000 100%);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--accent-gradient);
+        }
+        footer h3 {
+            color: white;
+            font-size: 1.6rem;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        footer h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.25rem;
+            margin: 2rem 0;
+        }
+        .team-card {
+            background: rgba(255,255,255,0.05);
+            padding: 1.25rem;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: var(--transition);
+        }
+        .team-card:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+        .team-name {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+        .team-role {
+            font-size: 0.85rem;
+            color: var(--gray-400);
+        }
+        .footer-note {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: var(--gray-400);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header & Navigation -->
+<header id="header">
+    <div class="container nav-wrap">
+        <a href="#" class="logo">TECH×FOUNDER</a>
+        <nav class="nav-links">
+            <a href="#rise">01 Rise</a>
+            <a href="#build">02 Build</a>
+            <a href="#scale">03 Scale</a>
+            <a href="#skills">04 Skills</a>
+            <a href="#numbers">05 Numbers</a>
+            <a href="#funding">06 Funding</a>
+            <a href="#faq">07 FAQ</a>
+            <a href="#glossary">08 Glossary</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container hero-content">
+        <span class="hero-badge">Field Notes · Technology & Entrepreneurship</span>
+        <h1>Building the Future,<br>One Idea at a Time</h1>
+        <p>How technology gives entrepreneurs the tools to turn small ideas into businesses that change how people live and work.</p>
+        <div class="hero-steps">
+            <span>💡 Idea</span>
+            <span>🛠️ Build</span>
+            <span>🚀 Scale</span>
+        </div>
+    </div>
+</section>
+
+<!-- Intro -->
+<section>
+    <div class="container">
+        <div class="section-header">
+            <span class="num-badge">Intro</span>
+            <h2>Where Innovation Begins</h2>
+        </div>
+        <p>Technology and entrepreneurship have become two sides of the same coin. Entrepreneurship is the drive to solve real problems by starting something new, while technology is the toolkit that makes those solutions possible at scale. Today, a single person with a laptop can build software used by millions, and a small team can launch a company that reshapes an entire industry.</p>
+        <p>This matters because the skills behind it — spotting a problem, building a working solution, and getting it into people's hands — are useful far beyond the tech industry. Understanding how technology and entrepreneurship work together helps students, workers, and future founders see opportunity where others see obstacles, and gives them a starting point for turning their own ideas into something real.</p>
+    </div>
+</section>
+
+<!-- 01 Rise -->
+<section id="rise">
+    <div class="container">
+        <div class="section-header">
+            <span class="num-badge">01</span>
+            <h2>The Rise of Tech Entrepreneurship</h2>
+        </div>
+        <p>A generation ago, starting a company meant renting an office, buying equipment, and raising a large amount of capital before selling a single product. <strong>Cloud computing, open-source software, and app marketplaces</strong> have collapsed that cost. A founder can now rent computing power by the hour, publish an app to a global audience overnight, and test an idea with real customers within weeks instead of years.</p>
+
+        <h3>Why It Happened Now</h3>
+        <p>Three forces converged: cheap and powerful cloud infrastructure, near-universal smartphone access, and payment systems that let anyone, anywhere, buy a digital product in seconds. Together, they turned the internet into a low-cost proving ground for new ideas.</p>
+
+        <div class="fact-box">
+            <strong>Did you know?</strong>
+            Many of the world's best-known startups — including Airbnb and Dropbox — were built by small founding teams who launched a basic version of their product before hiring a large staff or renting an office.
+        </div>
+    </div>
+</section>
+
+<!-- 02 Build -->
+<section id="build">
+    <div class="container">
+        <div class="section-header">
+            <span class="num-badge">02</span>
+            <h2>From Idea to Minimum Viable Product</h2>
+        </div>
+        <p>Entrepreneurs rarely launch a finished product. Instead, they build a <strong>Minimum Viable Product (MVP)</strong>: the smallest version of an idea that still solves the core problem. The goal is to learn from real users as early and cheaply as possible, rather than guessing what they want for months in private.</p>
+
+        <h3>A Typical Path from Idea to Launch</h3>
+        <ol>
+            <li><strong>Identify the problem</strong> — talk to real people before writing any code.</li>
+            <li><strong>Sketch the solution</strong> — map out the smallest useful version of the product.</li>
+            <li><strong>Build the MVP</strong> — use existing tools and platforms instead of building everything from scratch.</li>
+            <li><strong>Launch to a small audience</strong> — collect honest feedback quickly.</li>
+            <li><strong>Iterate & improve</strong> — refine the product based on what users actually do, not just what they say.</li>
+        </ol>
+        <p>For example, a founder building a scheduling app for tutors might start with a simple form and a shared calendar, rather than a full mobile app with payments and messaging built in. If tutors actually use it, the harder features get built next.</p>
+    </div>
+</section>
+
+<!-- 03 Scale -->
+<section id="scale">
+    <div class="container">
+        <div class="section-header">
+            <span class="num-badge">03</span>
+            <h2>Scaling with Emerging Technology</h2>
+        </div>
+        <p>Once a product finds real users, technology becomes the <strong>lever</strong> that lets a small team serve a large number of people without a matching increase in staff. Cloud servers expand automatically as traffic grows, and artificial intelligence now handles tasks that once needed entire departments.</p>
+
+        <h3>Where Entrepreneurs Are Using AI Today</h3>
+        <ul>
+            <li><strong>Customer support</strong> — chatbots answer common questions instantly, day or night.</li>
+            <li><strong>Content and design</strong> — founders draft marketing copy and prototypes far faster than before.</li>
+            <li><strong>Data and forecasting</strong> — small businesses predict demand and manage inventory with tools once limited to large corporations.</li>
+        </ul>
+
+        <div class="fact-box">
+            <strong>Smart Scaling</strong>
+            Cloud platforms let a startup pay only for the computing power it actually uses, so costs rise gradually with growth instead of requiring a large upfront investment in servers.
+        </div>
+
+        <p>The trade-off is that scaling fast also scales mistakes fast. A bug in an MVP might affect a dozen users; the same bug in a scaled product can affect millions before anyone notices. That's why entrepreneurs learn to <strong>grow deliberately</strong>, using data to guide each step instead of expanding blindly.</p>
+    </div>
+</section>
+
+<!-- 04 Skills -->
+<section id="skills">
+    <div class="container">
+        <div class="section-header">
+            <span class="num-badge">04</span>
+            <h2>Skills That Matter Most</h2>
+        </div>
+        <p>Neither technology nor entrepreneurship rewards knowing everything — they reward <strong>knowing how to learn fast and communicate clearly</strong>. The most useful skills tend to be the same ones taught in a good classroom:</p>
+        <ul>
+            <li>Breaking a large, vague problem into small, testable steps</li>
+            <li>Reading data honestly, even when it disagrees with your assumptions</li>
+            <li>Explaining a technical idea simply enough for a non-expert to act on it</li>
+            <li>Staying comfortable with being wrong early, so you can be right later</li>
+        </ul>
+
+        <h3>Further Reading</h3>
+        <ul>
+            <li><strong>Y Combinator Startup Library</strong> — practical guidance on building and launching early-stage companies.</li>
+            <li><strong>TechCrunch</strong> — daily coverage of startups, funding, and new technology.</li>
+            <li><strong>World Economic Forum — Entrepreneurship</strong> — research on how entrepreneurship drives economic growth worldwide.</li>
+        </ul>
+    </div>
+</section>
+
+<!-- 05 Numbers -->
+<section id="numbers">
+    <div class="container">
+        <div class="section-header">
+            <span class="num-badge">05</span>
+            <h2>Tech Entrepreneurship, By the Numbers</h2>
+        </div>
+        <p>Numbers help make an abstract trend concrete. The figures below (rounded, for illustration) count up when you scroll into view — hover or click any card to see why that number matters.</p>
+
+        <div class="numbers-grid">
+            <div class="number-card" data-num="90" data-suffix="%">
+                <div class="number-value">0%</div>
+                <p>of startups fail within their first few years — most from building something nobody needed</p>
+            </div>
+            <div class="number-card" data-num="2" data-suffix="">
+                <div class="number-value">0</div>
+                <p>average co-founders on record-setting startup teams like Google and Apple</p>
+            </div>
+            <div class="number-card" data-num="50" data-prefix="$" data-suffix="">
+                <div class="number-value">$0</div>
+                <p>dollars can be enough to rent the cloud servers needed to launch a basic MVP for a month</p>
+            </div>
+            <div class="number-card" data-num="12" data-suffix=" weeks">
+                <div class="number-value">0 weeks</div>
+                <p>a realistic timeline for a small team to build and launch a first testable MVP</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 06 Funding -->
+<section id="funding">
+    <div class="container">
+        <div class="section-header">
+            <span class="num-badge">06</span>
+            <h2>Bootstrapping vs. Venture Funding</h2>
+        </div>
+        <p>Once an MVP shows promise, founders face a choice: grow slowly using their own money and early revenue (<em>bootstrapping</em>), or raise money from investors in exchange for a share of the company (<em>venture funding</em>). <strong>Neither path is universally "better"</strong> — they trade off speed, control, and risk differently.</p>
+
+        <div class="funding-grid">
+            <div class="funding-col">
+                <h3>🌱 Bootstrapping</h3>
+                <p><strong>Growing on Your Own Terms</strong> — Bootstrapped founders fund the business with personal savings and early customer revenue. Growth is usually slower, but founders keep full control and decision-making stays fast since there's no board to convince first.</p>
+                <ul>
+                    <li>Best when the product can start earning revenue quickly</li>
+                    <li>Forces discipline — every feature has to justify its cost</li>
+                    <li>Founders keep 100% ownership & full decision-making power</li>
+                </ul>
+            </div>
+            <div class="funding-col">
+                <h3>🚀 Venture Funding</h3>
+                <p><strong>Growing with Capital</strong> — Investors provide capital in exchange for equity, expecting high growth and large returns. This can accelerate growth but means sharing ownership and control.</p>
+                <ul>
+                    <li>Enables fast scaling with plenty of runway</li>
+                    <li>Access to investor networks, expertise & partnerships</li>
+                    <li>Requires giving up ownership share & may share decision-making</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 07 FAQ -->
+<section id="faq">
+    <div class="container">
+        <div class="section-header">
+            <span class="num-badge">07</span>
+            <h2>Frequently Asked Questions</h2>
+        </div>
+        <p>Common questions students and first-time founders ask when they start exploring this topic. Click to expand!</p>
+
+        <div class="faq-item">
+            <button class="faq-q">Do I need to know how to code to start a tech company? <span>+</span></button>
+            <div class="faq-a"><div class="faq-a-inner">No. Many successful founders don't write code themselves — they understand the process, work with developers, or use no-code/low-code tools. What matters most is understanding the problem and the user, not writing every line of code.</div></div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-q">What's the difference between a startup and a small business? <span>+</span></button>
+            <div class="faq-a"><div class="faq-a-inner">Startups are designed for rapid, scalable growth — they aim to disrupt markets and serve huge audiences. Small businesses typically aim for sustainable, steady growth serving a local or niche market. Startups often prioritize growth over immediate profit; small businesses often prioritize profitability from early on.</div></div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-q">How do founders decide what problem to solve? <span>+</span></button>
+            <div class="faq-a"><div class="faq-a-inner">Great ideas usually come from personal experience — problems you face yourself, or pain points you observe in others. Founders talk to potential users extensively before building anything. The best problems are frequent, painful, and people are willing to pay for a solution.</div></div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-q">Is failure really that common in this space? <span>+</span></button>
+            <div class="faq-a"><div class="faq-a-inner">Yes — most startups do not succeed. But "failure" varies: some pivot to something better, some return modestly, some close entirely. In tech entrepreneurship, failure is often treated as data — a learning step toward the next idea. Many successful founders built failed companies first.</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- 08 Glossary -->
+<section id="glossary">
+    <div class="container">
+        <div class="section-header">
+            <span class="num-badge">08</span>
+            <h2>Glossary of Key Terms</h2>
+        </div>
+        <p>Type in the box below to filter terms — useful as a quick reference while reading and studying.</p>
+        
+        <input type="text" id="glossary-search" placeholder='Search terms, e.g. "MVP" or "cloud"...'>
+
+        <div id="glossary-list">
+            <div class="glossary-item">
+                <div class="glossary-term">MVP — Minimum Viable Product</div>
+                <div class="glossary-desc">The smallest working version of a product that still solves the core problem, built to test an idea with real users.</div>
+            </div>
+            <div class="glossary-item">
+                <div class="glossary-term">Bootstrapping</div>
+                <div class="glossary-desc">Growing a company using personal savings and early revenue instead of outside investment.</div>
+            </div>
+            <div class="glossary-item">
+                <div class="glossary-term">Venture Capital</div>
+                <div class="glossary-desc">Money invested by firms or individuals into early-stage companies in exchange for partial ownership, usually in hopes of a large future return.</div>
+            </div>
+            <div class="glossary-item">
+                <div class="glossary-term">Cloud Computing</div>
+                <div class="glossary-desc">Renting computing power and storage over the internet instead of buying and maintaining physical servers.</div>
+            </div>
+            <div class="glossary-item">
+                <div class="glossary-term">Iterate</div>
+                <div class="glossary-desc">To repeatedly improve a product in small steps based on real feedback and data, rather than trying to get it perfect on the first try.</div>
+            </div>
+            <div class="glossary-item">
+                <div class="glossary-term">Pivot</div>
+                <div class="glossary-desc">A significant change in a company's strategy or product direction, usually made after learning the original plan wasn't working.</div>
+            </div>
+            <div class="glossary-item">
+                <div class="glossary-term">Scale</div>
+                <div class="glossary-desc">Growing a business so it can serve many more customers without a matching increase in cost or staff.</div>
+            </div>
+            <div class="glossary-item">
+                <div class="glossary-term">Founder</div>
+                <div class="glossary-desc">A person who starts a company, often taking on financial and personal risk to bring an idea to life.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer / Team -->
+<footer>
+    <div class="container">
+        <h3>Group 1 — The Team</h3>
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-name">Bryce P. Abarquez</div>
+                <div class="team-role">Presenter</div>
+            </div>
+            <div class="team-card">
+                <div class="team-name">Aihrex Bejagan</div>
+                <div class="team-role">Content Writer</div>
+            </div>
+            <div class="team-card">
+                <div class="team-name">Lyle Angelo Basona</div>
+                <div class="team-role">Web Designer</div>
+            </div>
+            <div class="team-card">
+                <div class="team-name">Wiljhon Cortuna</div>
+                <div class="team-role">Researcher</div>
+            </div>
+            <div class="team-card">
+                <div class="team-name">Rendy Nice Dela Pieza</div>
+                <div class="team-role">Content Researcher</div>
+            </div>
+            <div class="team-card">
+                <div class="team-name">Wesly Lim</div>
+                <div class="team-role">Researcher</div>
+            </div>
+            <div class="team-card">
+                <div class="team-name">Jet Ray Ruedas</div>
+                <div class="team-role">WebPage Creator</div>
+            </div>
+            <div class="team-card">
+                <div class="team-name">Renerose Resurreccion</div>
+                <div class="team-role">Publisher</div>
+            </div>
+        </div>
+        <div class="footer-note">
+            <strong>TECH×FOUNDER — Field Notes: Technology & Entrepreneurship</strong><br>
+            Created for classroom use
+        </div>
+    </div>
+</footer>
+
+<!-- JavaScript -->
+<script>
+    // Header scroll effect
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) header.classList.add('scrolled');
+        else header.classList.remove('scrolled');
+    });
+
+    // FAQ Accordion
+    const faqQs = document.querySelectorAll('.faq-q');
+    faqQs.forEach(q => {
+        q.addEventListener('click', () => {
+            q.classList.toggle('active');
+            const icon = q.querySelector('span');
+            icon.textContent = q.classList.contains('active') ? '−' : '+';
+            const a = q.nextElementSibling;
+            a.style.maxHeight = a.style.maxHeight ? null : a.scrollHeight + 'px';
+        });
+    });
+
+    // Glossary Search
+    const searchInput = document.getElementById('glossary-search');
+    const items = document.querySelectorAll('.glossary-item');
+    searchInput.addEventListener('input', e => {
+        const term = e.target.value.toLowerCase();
+        items.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            item.style.display = text.includes(term) ? '' : 'none';
+        });
+    });
+
+    // Number Counter Animation
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const card = entry.target;
+            const target = parseInt(card.dataset.num);
+            const suffix = card.dataset.suffix || '';
+            const prefix = card.dataset.prefix || '';
+            const numEl = card.querySelector('.number-value');
+            let count = 0;
+            const timer = setInterval(() => {
+                count++;
+                numEl.textContent = prefix + count + suffix;
+                if (count >= target) clearInterval(timer);
+            }, 60);
+            observer.unobserve(card);
+        });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.number-card').forEach(card => {
+        observer.observe(card);
+    });
+</script>
+
+</body>
+</html>
